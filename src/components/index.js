@@ -16,6 +16,7 @@ const HomeComponent = ({
   values,
   history,
   getSearchResults,
+  loading,
 }) => {
   return (
     <>
@@ -28,7 +29,11 @@ const HomeComponent = ({
         onOk={handleOk}
         onCancel={handleCancel}
       >
-        <Checkbox.Group options={coins} defaultValue={[]} onChange={onChange} />
+        <Checkbox.Group
+          options={coins}
+          defaultValue={labels}
+          onChange={onChange}
+        />
       </Modal>
 
       <div className="container">
@@ -45,8 +50,9 @@ const HomeComponent = ({
         </div>
         <div className="history-container">
           <List
-            header={<div>Search History</div>}
+            header={<h2>Comparison History</h2>}
             bordered
+            loading={loading}
             dataSource={history}
             renderItem={(item) => (
               <List.Item onClick={() => getSearchResults(item.currencies)}>

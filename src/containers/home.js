@@ -9,6 +9,7 @@ const Home = () => {
   const [data, setData] = useState({});
   const [previousState, setPreviousState] = useState([]);
   const [history, setHistory] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     axios
@@ -28,10 +29,12 @@ const Home = () => {
   }, []);
 
   const getHistory = async () => {
+    setLoading(true);
     let updatedHistory = await axios.get(
       `${process.env.REACT_APP_BACKEND_URL}/api/history`
     );
     setHistory(updatedHistory.data);
+    setLoading(false);
   };
 
   const getSearchResults = async (coins) => {
@@ -91,6 +94,7 @@ const Home = () => {
       values={data}
       history={history}
       getSearchResults={getSearchResults}
+      loading={loading}
     />
   );
 };
